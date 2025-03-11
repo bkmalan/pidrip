@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 
 relayPin = 11    # GPIO17
-delay = 30
+delay = 3600
 
 
 def setup():
@@ -17,7 +17,7 @@ def open_valve():
 
 
 def close_valve():
-    GPIO.output(relayPin, GPIO.HIGH)
+    GPIO.output(relayPin, GPIO.LOW)
 
 
 def destroy():
