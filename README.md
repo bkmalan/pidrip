@@ -1,3 +1,3 @@
 # pidrip
 
-Basic irrigation app
+Basic irrigation app using pi
