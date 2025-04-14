@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 
 relayPin = 11    # GPIO17
-delay = 1800
+delay = 3600
 
 
 def setup():
