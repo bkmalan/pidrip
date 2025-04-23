@@ -51,7 +51,7 @@ def close_valve():
 
 
 if __name__ == '__main__':
-    delay = 5
+    delay = 1800
     try:
         open_valve()
         time.sleep(delay)
