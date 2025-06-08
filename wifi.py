@@ -1,17 +1,30 @@
 import requests
 import time
-
+import json
+from dotenv import load_dotenv
+import os
 url = "http://192.168.1.50"
 
 headers = {
-  'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded'
 }
 
-def send_message(msg):
-    BOT_TOKEN = "bot8123516038:AAHo3fl8CfC6oGx-unJ_jMRLLMK8c2CNyt0"
-    CHAT_ID = "-4722370003"
+load_dotenv()  # Load .env file
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
-    url = f"https://api.telegram.org/{BOT_TOKEN}/sendMessage"
+
+def get_state():
+    try:
+        with open("state.json") as f:
+            return json.load(f).get("state")
+    except FileNotFoundError:
+        return None
+
+
+def send_message(msg):
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
     payload = {
         "chat_id": CHAT_ID,
@@ -36,7 +49,8 @@ def open_valve():
     response = requests.request("POST", url, headers=headers, data=payload)
     print('watering')
     print(response.text)
-    send_message("Watering plants")
+    send_message("Watering plants 🌱🌿🌾")
+
 
 def close_valve():
     payload = 'auth=321&state=OFF'
@@ -45,14 +59,15 @@ def close_valve():
     print('done')
 
     print(response.text)
-    send_message("Watering complete")
-
-
+    send_message("Watering complete 🌳🌲🌴")
 
 
 if __name__ == '__main__':
     delay = 1800
     try:
+        if get_state() and get_state() == 'off':
+            send_message("Current state is OFF, exiting.")
+            exit(0)
         open_valve()
         time.sleep(delay)
         close_valve()
