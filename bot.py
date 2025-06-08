@@ -4,9 +4,9 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 import json
 load_dotenv()  # Load .env file
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+# pip install python-telegram-bot --upgrade
 
-print(BOT_TOKEN)
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 
 def update_state(value: str):
