@@ -15,6 +15,12 @@ def update_state(value: str):
     return value
 
 
+def update_rain_state(value: str):
+    with open("rain.json", "w+") as f:
+        json.dump({"state": value}, f)
+    return value
+
+
 def get_state():
     try:
         with open("state.json") as f:
@@ -23,16 +29,27 @@ def get_state():
         return None
 
 
+def get_rain_state():
+    try:
+        with open("rain.json") as f:
+            return json.load(f).get("state")
+    except FileNotFoundError:
+        return None
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     words = update.message.text.split(' ')
-    if words[0].lower() not in ['get', 'set']:
+    if words[0].lower() not in ['get', 'set', 'rain']:
         await update.message.reply_text("❌ Stop wasting my time!")
         return
     if words[0].lower() == 'get':
-        await update.message.reply_text(f"Current state: {get_state()}")
+        await update.message.reply_text(f"Current state: {get_state()}\nRain state: {get_rain_state()}")
         return
     if words[0].lower() == 'set' and words[1].lower() in ['on', 'off']:
         await update.message.reply_text(f"Current state: {update_state(words[1].lower())}")
+        return
+    if words[0].lower() == 'rain' and words[1].lower() in ['on', 'off']:
+        await update.message.reply_text(f"Current rain state: {update_rain_state(words[1].lower())}")
         return
 
     print(

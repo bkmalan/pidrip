@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+from bot import get_rain_state
 from dotenv import load_dotenv
 import os
 url = "http://192.168.1.50"
@@ -18,6 +19,14 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 def get_state():
     try:
         with open("/home/siranj/pidrip/state.json") as f:
+            return json.load(f).get("state")
+    except FileNotFoundError:
+        return None
+
+
+def get_state():
+    try:
+        with open("/home/siranj/pidrip/rain.json") as f:
             return json.load(f).get("state")
     except FileNotFoundError:
         return None
@@ -116,7 +125,7 @@ if __name__ == '__main__':
         if get_state() and get_state() == 'off':
             send_message("Current state is OFF, exiting.")
             exit(0)
-        if did_it_rain():
+        if get_rain_state() == 'on' and did_it_rain():
             exit(0)
         open_valve()
         time.sleep(delay)
