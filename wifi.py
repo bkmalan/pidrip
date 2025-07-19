@@ -16,7 +16,7 @@ CHAT_ID = os.getenv("CHAT_ID")
 
 def get_state():
     try:
-        with open("state.json") as f:
+        with open("/home/siranj/pidrip/state.json") as f:
             return json.load(f).get("state")
     except FileNotFoundError:
         return None
