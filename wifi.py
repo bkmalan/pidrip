@@ -1,7 +1,6 @@
 import requests
 import time
 import json
-from bot import get_rain_state
 from dotenv import load_dotenv
 import os
 url = "http://192.168.1.50"
@@ -24,7 +23,7 @@ def get_state():
         return None
 
 
-def get_state():
+def get_rain_state():
     try:
         with open("/home/siranj/pidrip/rain.json") as f:
             return json.load(f).get("state")
